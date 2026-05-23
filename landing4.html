@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>LumiCase NEBULA — Ra Mắt Sản Phẩm Mới</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Michroma&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --aqua: #00e5c8;
+  --aqua2: #00c9a7;
+  --purple: #7b4fff;
+  --nebula: #ff5fad;
+  --deep: #03050f;
+  --deep2: #060c1e;
+  --deep3: #0b1230;
+  --card-bg: rgba(255,255,255,0.03);
+  --card-border: rgba(0,229,200,0.15);
+  --text: #e8f4f4;
+  --text-muted: rgba(200,230,230,0.55);
+  --glow: 0 0 40px rgba(0,229,200,0.3);
+  --glow-sm: 0 0 18px rgba(0,229,200,0.2);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--deep);color:var(--text);
+  font-family:'DM Sans',sans-serif;overflow-x:hidden;cursor:none;
+}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--deep2);}
+::-webkit-scrollbar-thumb{background:var(--aqua);border-radius:2px;}
+
+/* CURSOR */
+#cursor{position:fixed;width:10px;height:10px;border-radius:50%;background:var(--aqua);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .1s,width .2s,height .2s,opacity .2s;mix-blend-mode:screen;}
+#cursor-ring{position:fixed;width:36px;height:36px;border-radius:50%;border:1px solid rgba(0,229,200,0.4);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .12s cubic-bezier(.2,.8,.2,1),width .3s,height .3s,opacity .3s;mix-blend-mode:screen;}
+body:hover #cursor{opacity:1;}
+
+/* CANVAS BG */
+#starfield{position:fixed;inset:0;z-index:0;pointer-events:none;}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  padding:20px 60px;display:flex;align-items:center;justify-content:space-between;
+  background:linear-gradient(to bottom,rgba(3,5,15,0.95) 0%,transparent 100%);
+  transition:all .4s;
+}
+nav.scrolled{background:rgba(3,5,15,0.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,229,200,0.08);padding:14px 60px;}
+.nav-logo{font-family:'Michroma',sans-serif;font-size:1.4rem;font-weight:800;letter-spacing:2px;color:var(--aqua);text-shadow:var(--glow-sm);}
+.nav-logo span{color:var(--text);opacity:.7;font-weight:400;}
+.nav-links{display:flex;gap:36px;list-style:none;}
+.nav-links a{color:var(--text-muted);text-decoration:none;font-size:0.82rem;font-weight:500;letter-spacing:1px;text-transform:uppercase;transition:.3s;}
+.nav-links a:hover{color:var(--aqua);}
+.nav-cta{background:transparent;border:1px solid var(--aqua);color:var(--aqua);padding:9px 24px;border-radius:999px;font-size:0.82rem;font-weight:600;letter-spacing:1px;cursor:none;transition:.3s;font-family:'DM Sans',sans-serif;}
+.nav-cta:hover{background:var(--aqua);color:var(--deep);box-shadow:var(--glow);}
+
+/* SECTION BASE */
+section{position:relative;z-index:1;}
+
+/* ====== HERO ====== */
+.hero{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:120px 40px 80px;overflow:hidden;
+}
+.hero-nebula{
+  position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 900px 600px at 50% 40%, rgba(123,79,255,0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 600px 400px at 80% 20%, rgba(0,229,200,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 400px 300px at 10% 70%, rgba(255,95,173,0.06) 0%, transparent 50%);
+}
+.hero-content{position:relative;z-index:2;max-width:900px;margin:0 auto;}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:10px;
+  background:rgba(0,229,200,0.06);border:1px solid rgba(0,229,200,0.25);
+  border-radius:999px;padding:7px 20px;font-size:0.72rem;font-weight:500;
+  letter-spacing:2px;text-transform:uppercase;color:var(--aqua);
+  margin-bottom:32px;
+  animation:fadeUp .8s ease both;
+}
+.hero-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--aqua);box-shadow:0 0 10px var(--aqua);animation:pulse 2s infinite;}
+.hero-kicker{font-family:'Michroma',sans-serif;font-size:clamp(0.9rem,2vw,1.1rem);font-weight:600;letter-spacing:5px;text-transform:uppercase;color:var(--aqua);margin-bottom:20px;animation:fadeUp .8s .1s ease both;}
+.hero-title{
+  font-family:'Michroma',sans-serif;
+  font-size:clamp(3.5rem,9vw,8.5rem);
+  font-weight:800;line-height:.95;letter-spacing:-2px;
+  margin-bottom:28px;
+  animation:fadeUp .8s .2s ease both;
+}
+.hero-title .line1{color:var(--text);}
+.hero-title .line2{
+  background:linear-gradient(135deg, var(--aqua) 0%, var(--purple) 50%, var(--nebula) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 30px rgba(0,229,200,0.4));
+}
+.hero-sub{
+  font-size:1.05rem;line-height:1.8;color:var(--text-muted);font-weight:300;
+  max-width:520px;margin:0 auto 48px;animation:fadeUp .8s .3s ease both;
+}
+.hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;animation:fadeUp .8s .4s ease both;}
+
+/* ====== COUNTDOWN ====== */
+.countdown-wrap{
+  margin-top:56px;animation:fadeUp .8s .5s ease both;
+}
+.countdown-label{font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px;}
+.countdown{display:flex;gap:24px;justify-content:center;}
+.cd-item{text-align:center;}
+.cd-num{
+  font-family:'Michroma',sans-serif;font-size:2.8rem;font-weight:800;line-height:1;
+  color:var(--aqua);text-shadow:0 0 30px rgba(0,229,200,0.5);
+  background:rgba(0,229,200,0.05);border:1px solid rgba(0,229,200,0.15);
+  border-radius:12px;padding:12px 18px;min-width:80px;display:block;
+}
+.cd-label{font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-top:8px;}
+.cd-sep{font-family:'Michroma',sans-serif;font-size:2rem;color:var(--aqua);opacity:.4;align-self:center;margin-top:-18px;}
+
+/* ====== PRODUCT REVEAL ====== */
+.product-section{
+  padding:120px 60px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;
+  max-width:1200px;margin:0 auto;
+}
+.product-visual{position:relative;display:flex;align-items:center;justify-content:center;}
+.product-glow-ring{
+  position:absolute;width:420px;height:420px;border-radius:50%;
+  background:radial-gradient(circle, rgba(0,229,200,0.12) 0%, transparent 70%);
+  animation:breathe 4s ease-in-out infinite;
+}
+.product-glow-ring2{
+  position:absolute;width:340px;height:340px;border-radius:50%;
+  border:1px solid rgba(0,229,200,0.12);
+  animation:rotate 20s linear infinite;
+}
+.product-glow-ring2::before{
+  content:'';position:absolute;top:-3px;left:50%;width:6px;height:6px;
+  border-radius:50%;background:var(--aqua);box-shadow:0 0 20px var(--aqua);
+  transform:translateX(-50%);
+}
+.product-glow-ring3{
+  position:absolute;width:280px;height:280px;border-radius:50%;
+  border:1px solid rgba(123,79,255,0.15);
+  animation:rotate 14s linear infinite reverse;
+}
+.case-mockup{
+  position:relative;z-index:2;
+  animation:floatPhone 5s ease-in-out infinite;
+  filter:drop-shadow(0 30px 80px rgba(0,229,200,0.3)) drop-shadow(0 0 60px rgba(123,79,255,0.25));
+}
+.case-body{
+  width:190px;height:360px;
+  border-radius:32px 32px 28px 28px;
+  border:2px solid rgba(0,229,200,0.5);
+  background:linear-gradient(145deg,
+    #0d2535 0%, #091a2e 30%, #0e0b2a 65%, #12092a 100%);
+  position:relative;overflow:hidden;
+}
+.case-shine{
+  position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(135deg,
+    rgba(0,229,200,0.18) 0%,
+    rgba(123,79,255,0.12) 35%,
+    rgba(255,95,173,0.08) 65%,
+    transparent 100%);
+  mix-blend-mode:screen;
+}
+.case-grain{
+  position:absolute;inset:0;border-radius:inherit;
+  background-image:radial-gradient(circle at 20% 30%, rgba(0,229,200,0.06) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(123,79,255,0.08) 0%, transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(255,95,173,0.04) 0%, transparent 60%);
+}
+.case-glow-inner{
+  position:absolute;top:15%;left:50%;transform:translateX(-50%);
+  width:100px;height:100px;border-radius:50%;
+  background:radial-gradient(circle, rgba(0,229,200,0.12) 0%, transparent 70%);
+}
+.case-camera-cut{
+  position:absolute;top:18px;left:18px;
+  width:72px;height:72px;border-radius:18px;
+  border:1.5px solid rgba(0,229,200,0.25);
+  background:linear-gradient(135deg,rgba(0,0,0,0.6),rgba(5,10,20,0.8));
+  display:grid;grid-template-columns:1fr 1fr;gap:5px;padding:8px;
+}
+.case-camera-cut::before,.case-camera-cut::after{
+  content:'';border-radius:50%;
+  background:radial-gradient(circle, rgba(0,229,200,0.15) 0%, rgba(0,0,0,0.8) 70%);
+  border:1px solid rgba(0,229,200,0.2);
+}
+.case-side-btn{
+  position:absolute;width:4px;border-radius:2px;
+  background:linear-gradient(to bottom,rgba(0,229,200,0.5),rgba(0,229,200,0.2));
+}
+.case-side-btn.left{left:-5px;top:100px;height:50px;}
+.case-side-btn.right{right:-5px;height:32px;}
+.case-side-btn.right.t1{top:90px;}
+.case-side-btn.right.t2{top:135px;}
+.case-badge{
+  position:absolute;bottom:20px;left:50%;transform:translateX(-50%);
+  background:rgba(0,229,200,0.1);border:1px solid rgba(0,229,200,0.3);
+  border-radius:999px;padding:5px 16px;font-family:"Michroma",sans-serif;
+  font-size:0.62rem;letter-spacing:2px;color:var(--aqua);white-space:nowrap;
+}
+.float-chip{
+  position:absolute;background:rgba(3,5,15,0.9);border:1px solid rgba(0,229,200,0.2);
+  border-radius:14px;padding:10px 16px;backdrop-filter:blur(20px);
+}
+.float-chip.c1{top:10%;right:-15%;animation:floatChip 4s .5s ease-in-out infinite;}
+.float-chip.c2{bottom:18%;left:-20%;animation:floatChip 4s 1.5s ease-in-out infinite;}
+.float-chip.c3{top:55%;right:-22%;animation:floatChip 4s 1s ease-in-out infinite;}
+.chip-icon{font-size:1.2rem;}
+.chip-label{font-size:0.65rem;color:var(--text-muted);letter-spacing:.5px;}
+.chip-val{font-family:'Michroma',sans-serif;font-size:0.9rem;font-weight:700;color:var(--aqua);}
+
+/* product info */
+.product-info{}
+.prod-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+.prod-tag{background:rgba(123,79,255,0.1);border:1px solid rgba(123,79,255,0.25);border-radius:999px;padding:5px 14px;font-size:0.7rem;letter-spacing:1.5px;text-transform:uppercase;color:#a78bfa;}
+.prod-title{font-family:'Michroma',sans-serif;font-size:clamp(2rem,4vw,3.4rem);font-weight:800;line-height:1.1;margin-bottom:18px;letter-spacing:-0.5px;}
+.prod-title .glow-text{color:var(--aqua);text-shadow:0 0 30px rgba(0,229,200,0.4);}
+.prod-desc{color:var(--text-muted);font-size:0.98rem;line-height:1.8;font-weight:300;margin-bottom:36px;}
+.prod-price-row{display:flex;align-items:baseline;gap:12px;margin-bottom:36px;}
+.prod-price{font-family:'Michroma',sans-serif;font-size:2.4rem;font-weight:800;color:var(--aqua);}
+.prod-price-old{font-size:1rem;color:var(--text-muted);text-decoration:line-through;}
+.prod-price-off{font-size:0.78rem;background:rgba(255,95,173,0.12);border:1px solid rgba(255,95,173,0.25);color:#ff5fad;border-radius:999px;padding:3px 12px;font-weight:600;}
+.color-picker{display:flex;gap:10px;margin-bottom:32px;margin-top:12px;}
+.color-dot{width:28px;height:28px;border-radius:50%;cursor:none;transition:.3s;border:2px solid transparent;position:relative;}
+.color-dot:hover,.color-dot.active{transform:scale(1.2);}
+.color-dot.active::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1.5px solid var(--aqua);}
+.color-dot.c-nebula{background:linear-gradient(135deg,#00e5c8,#7b4fff);}
+.color-dot.c-cosmos{background:linear-gradient(135deg,#ff5fad,#7b4fff);}
+.color-dot.c-void{background:linear-gradient(135deg,#1a1a2e,#16213e);}
+.color-dot.c-aurora{background:linear-gradient(135deg,#00e5c8,#00c9a7);}
+.color-name{font-size:0.75rem;color:var(--text-muted);margin-bottom:14px;margin-top:36px;letter-spacing:.5px;}
+.prod-actions{display:flex;gap:12px;flex-wrap:wrap;}
+
+/* ====== BUTTONS ====== */
+.btn-space{
+  background:linear-gradient(135deg,var(--aqua),var(--purple));
+  color:white;border:none;border-radius:999px;padding:15px 36px;
+  font-size:0.88rem;font-weight:600;cursor:none;transition:.35s;
+  font-family:'DM Sans',sans-serif;letter-spacing:.5px;
+  position:relative;overflow:hidden;
+}
+.btn-space::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,0.12),transparent);
+  border-radius:inherit;
+}
+.btn-space:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,229,200,0.35),0 4px 16px rgba(123,79,255,0.3);}
+.btn-ghost{
+  background:transparent;border:1px solid rgba(0,229,200,0.3);color:var(--aqua);
+  border-radius:999px;padding:15px 36px;font-size:0.88rem;font-weight:500;
+  cursor:none;transition:.35s;font-family:'DM Sans',sans-serif;
+}
+.btn-ghost:hover{border-color:var(--aqua);background:rgba(0,229,200,0.06);transform:translateY(-2px);}
+
+/* ====== FEATURES ====== */
+.features-section{padding:100px 60px;max-width:1200px;margin:0 auto;}
+.section-header{text-align:center;margin-bottom:70px;}
+.section-tag{display:inline-block;font-size:0.7rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--aqua);background:rgba(0,229,200,0.07);border:1px solid rgba(0,229,200,0.15);border-radius:999px;padding:6px 18px;margin-bottom:18px;}
+.section-title{font-family:'Michroma',sans-serif;font-size:clamp(1.8rem,3.5vw,3rem);font-weight:800;letter-spacing:-0.5px;line-height:1.15;}
+.section-sub{color:var(--text-muted);font-size:0.95rem;line-height:1.8;max-width:480px;margin:14px auto 0;font-weight:300;}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.feat-card{
+  background:var(--card-bg);border:1px solid var(--card-border);
+  border-radius:24px;padding:36px 32px;position:relative;overflow:hidden;
+  transition:.4s;
+}
+.feat-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(0,229,200,0.4),transparent);
+}
+.feat-card:hover{border-color:rgba(0,229,200,0.3);transform:translateY(-4px);background:rgba(0,229,200,0.04);}
+.feat-card:hover .feat-icon-wrap{box-shadow:0 0 40px rgba(0,229,200,0.2);}
+.feat-card-glow{
+  position:absolute;width:200px;height:200px;border-radius:50%;top:-80px;right:-60px;
+  background:radial-gradient(circle,rgba(0,229,200,0.06) 0%,transparent 70%);pointer-events:none;
+  transition:.4s;
+}
+.feat-card:hover .feat-card-glow{background:radial-gradient(circle,rgba(0,229,200,0.12) 0%,transparent 70%);}
+.feat-icon-wrap{
+  width:54px;height:54px;border-radius:16px;
+  border:1px solid rgba(0,229,200,0.2);
+  background:rgba(0,229,200,0.06);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Michroma',sans-serif;font-size:0.8rem;font-weight:400;
+  color:var(--aqua);letter-spacing:1px;
+  margin-bottom:22px;transition:.3s;
+}
+.feat-num{font-family:'Michroma',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:2px;color:rgba(0,229,200,0.4);text-transform:uppercase;margin-bottom:8px;}
+.feat-title{font-family:'Michroma',sans-serif;font-size:1.15rem;font-weight:700;margin-bottom:12px;}
+.feat-desc{font-size:0.875rem;line-height:1.8;color:var(--text-muted);font-weight:300;}
+
+/* ====== MATERIALS ====== */
+.materials-section{padding:100px 60px;background:linear-gradient(to bottom,transparent,rgba(0,229,200,0.03),transparent);position:relative;z-index:1;}
+.materials-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.2fr 1fr;gap:80px;align-items:center;}
+.material-specs{display:flex;flex-direction:column;gap:2px;}
+.spec-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 20px;border-radius:12px;transition:.3s;
+  border:1px solid transparent;
+}
+.spec-row:hover{background:rgba(0,229,200,0.04);border-color:rgba(0,229,200,0.1);}
+.spec-left{display:flex;align-items:center;gap:14px;}
+.spec-dot{width:8px;height:8px;border-radius:50%;background:var(--aqua);box-shadow:0 0 10px rgba(0,229,200,.5);}
+.spec-name{font-size:0.9rem;color:var(--text-muted);}
+.spec-val{font-family:'Michroma',sans-serif;font-size:0.9rem;font-weight:700;color:var(--text);}
+.spec-divider{height:1px;background:rgba(0,229,200,0.06);margin:4px 0;}
+.material-visual{text-align:center;}
+.big-stat{font-family:'Michroma',sans-serif;font-size:6rem;font-weight:800;line-height:.9;color:var(--aqua);text-shadow:0 0 60px rgba(0,229,200,0.3);margin-bottom:8px;}
+.big-stat-label{font-size:0.85rem;color:var(--text-muted);letter-spacing:1px;}
+.stats-mini{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:32px;}
+.mini-stat{background:rgba(0,229,200,0.05);border:1px solid rgba(0,229,200,0.12);border-radius:14px;padding:18px;}
+.mini-num{font-family:'Michroma',sans-serif;font-size:1.6rem;font-weight:800;color:var(--aqua);}
+.mini-label{font-size:0.72rem;color:var(--text-muted);letter-spacing:.5px;margin-top:4px;}
+
+/* ====== TESTIMONIALS ====== */
+.social-section{padding:100px 60px;max-width:1200px;margin:0 auto;}
+.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:60px;}
+.testi-card{
+  background:var(--card-bg);border:1px solid var(--card-border);border-radius:20px;padding:28px;
+  transition:.4s;
+}
+.testi-card:hover{border-color:rgba(0,229,200,0.25);transform:translateY(-3px);}
+.testi-stars{color:var(--aqua);font-size:0.85rem;letter-spacing:2px;margin-bottom:14px;}
+.testi-text{font-size:0.875rem;line-height:1.75;color:var(--text-muted);font-style:italic;margin-bottom:18px;font-weight:300;}
+.testi-user{display:flex;align-items:center;gap:10px;}
+.testi-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--aqua),var(--purple));display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:700;color:white;}
+.testi-name{font-size:0.82rem;font-weight:600;}
+.testi-handle{font-size:0.72rem;color:var(--text-muted);}
+
+/* ====== CTA ====== */
+.cta-section{
+  padding:120px 60px;text-align:center;position:relative;overflow:hidden;
+}
+.cta-nebula{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 800px 500px at 50% 50%,rgba(123,79,255,0.1) 0%,transparent 70%),
+             radial-gradient(ellipse 400px 300px at 20% 50%,rgba(0,229,200,0.07) 0%,transparent 60%),
+             radial-gradient(ellipse 400px 300px at 80% 50%,rgba(255,95,173,0.06) 0%,transparent 50%);
+}
+.cta-inner{position:relative;z-index:1;max-width:700px;margin:0 auto;}
+.cta-title{font-family:'Michroma',sans-serif;font-size:clamp(2.2rem,5vw,4rem);font-weight:800;line-height:1.1;letter-spacing:-0.5px;margin-bottom:20px;}
+.cta-title .glow{background:linear-gradient(135deg,var(--aqua),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.cta-sub{color:var(--text-muted);font-size:0.98rem;line-height:1.8;margin-bottom:48px;font-weight:300;}
+.cta-form{display:flex;gap:12px;max-width:440px;margin:0 auto 24px;}
+.cta-input{
+  flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(0,229,200,0.2);
+  border-radius:999px;padding:14px 22px;color:var(--text);font-size:0.88rem;
+  font-family:'DM Sans',sans-serif;outline:none;transition:.3s;
+}
+.cta-input:focus{border-color:rgba(0,229,200,0.5);background:rgba(0,229,200,0.04);}
+.cta-input::placeholder{color:var(--text-muted);}
+.cta-note{font-size:0.75rem;color:var(--text-muted);}
+.cta-badges{display:flex;gap:16px;justify-content:center;margin-top:36px;}
+.cta-badge{display:flex;align-items:center;gap:8px;font-size:0.8rem;color:var(--text-muted);}
+.cta-badge-icon{font-size:1rem;}
+
+/* ====== FOOTER ====== */
+footer{
+  border-top:1px solid rgba(0,229,200,0.08);padding:40px 60px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:relative;z-index:1;
+}
+.footer-logo{font-family:'Michroma',sans-serif;font-size:1.1rem;font-weight:800;color:var(--aqua);}
+.footer-links{display:flex;gap:28px;}
+.footer-links a{font-size:0.78rem;color:var(--text-muted);text-decoration:none;letter-spacing:.5px;transition:.2s;}
+.footer-links a:hover{color:var(--aqua);}
+.footer-copy{font-size:0.75rem;color:rgba(200,230,230,0.25);}
+
+/* ====== SCROLL REVEAL ====== */
+.reveal{opacity:0;transform:translateY(30px);transition:.7s cubic-bezier(.4,0,.2,1);}
+.reveal.visible{opacity:1;transform:none;}
+.reveal-left{opacity:0;transform:translateX(-30px);transition:.7s cubic-bezier(.4,0,.2,1);}
+.reveal-left.visible{opacity:1;transform:none;}
+.reveal-right{opacity:0;transform:translateX(30px);transition:.7s cubic-bezier(.4,0,.2,1);}
+.reveal-right.visible{opacity:1;transform:none;}
+
+/* ====== RIBBON ====== */
+.ribbon{overflow:hidden;border-top:1px solid rgba(0,229,200,0.06);border-bottom:1px solid rgba(0,229,200,0.06);padding:16px 0;background:rgba(0,229,200,0.02);position:relative;z-index:1;}
+.ribbon-track{display:flex;white-space:nowrap;animation:marquee 30s linear infinite;}
+.ribbon-item{display:inline-flex;align-items:center;gap:8px;font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);padding:0 32px;}
+.ribbon-sep{display:inline-block;color:rgba(0,229,200,0.25);padding:0 10px;font-size:0.65rem;}
+
+/* ====== KEYFRAMES ====== */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(0,229,200,.4);}50%{opacity:.7;box-shadow:0 0 0 6px rgba(0,229,200,0);}}
+@keyframes floatPhone{0%,100%{transform:translateY(0px) rotate(0deg);}33%{transform:translateY(-14px) rotate(1deg);}66%{transform:translateY(-8px) rotate(-0.5deg);}}
+@keyframes floatChip{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+@keyframes breathe{0%,100%{opacity:.6;transform:scale(.95);}50%{opacity:1;transform:scale(1.05);}}
+@keyframes rotate{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+@keyframes marquee{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+@keyframes twinkle{0%,100%{opacity:.3;}50%{opacity:1;}}
+
+/* ====== RESPONSIVE ====== */
+@media(max-width:900px){
+  nav{padding:16px 24px;}
+  .nav-links{display:none;}
+  .product-section,.materials-inner{grid-template-columns:1fr;gap:48px;}
+  .features-grid{grid-template-columns:1fr;}
+  .testimonials-grid{grid-template-columns:1fr;}
+  .product-visual{order:-1;}
+  footer{flex-direction:column;gap:20px;text-align:center;}
+  .cta-form{flex-direction:column;}
+  .countdown{gap:12px;}
+  .cd-num{font-size:2rem;min-width:60px;padding:10px 12px;}
+}
+</style>
+</head>
+<body>
+
+<canvas id="starfield"></canvas>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="nav-logo">LUMI<span>CASE</span></div>
+  <ul class="nav-links">
+    <li><a href="#product">Sản Phẩm</a></li>
+    <li><a href="#features">Tính Năng</a></li>
+    <li><a href="#materials">Chất Liệu</a></li>
+    <li><a href="#preorder">Pre-order</a></li>
+  </ul>
+  <button class="nav-cta" onclick="scrollTo('preorder')">Đặt Hàng Sớm</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-nebula"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span></span> Ra Mắt Chính Thức — Bộ Sưu Tập 2025
+    </div>
+    <p class="hero-kicker">LumiCase Presents</p>
+    <h1 class="hero-title">
+      <div class="line1">THE NEW</div>
+      <div class="line2">NEBULA</div>
+      <div class="line1">SERIES</div>
+    </h1>
+    <p class="hero-sub">Ốp điện thoại cao cấp lấy cảm hứng từ vũ trụ — nơi công nghệ bảo vệ gặp gỡ nghệ thuật không gian. Mang cả thiên hà về trong tay bạn.</p>
+    <div class="hero-actions">
+      <button class="btn-space" onclick="document.getElementById('preorder').scrollIntoView({behavior:'smooth'})">Đặt Trước Ngay</button>
+      <button class="btn-ghost" onclick="document.getElementById('product').scrollIntoView({behavior:'smooth'})">Khám Phá →</button>
+    </div>
+    <div class="countdown-wrap">
+      <p class="countdown-label">Ra mắt chính thức sau</p>
+      <div class="countdown">
+        <div class="cd-item"><span class="cd-num" id="cd-days">07</span><span class="cd-label">Ngày</span></div>
+        <span class="cd-sep">:</span>
+        <div class="cd-item"><span class="cd-num" id="cd-hours">14</span><span class="cd-label">Giờ</span></div>
+        <span class="cd-sep">:</span>
+        <div class="cd-item"><span class="cd-num" id="cd-mins">32</span><span class="cd-label">Phút</span></div>
+        <span class="cd-sep">:</span>
+        <div class="cd-item"><span class="cd-num" id="cd-secs">09</span><span class="cd-label">Giây</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RIBBON -->
+<div class="ribbon">
+  <div class="ribbon-track" id="ribbonTrack"></div>
+</div>
+
+<!-- PRODUCT REVEAL -->
+<section class="product-section" id="product">
+  <div class="product-visual reveal-left">
+    <div class="product-glow-ring"></div>
+    <div class="product-glow-ring2"></div>
+    <div class="product-glow-ring3"></div>
+    <div class="case-mockup">
+      <div class="case-body">
+  <img src="anh_02_no_bg.png" 
+       style="width:100%;height:100%;object-fit:cover;border-radius:30px;position:absolute;inset:0;">
+  <div class="case-shine"></div>  <!-- giữ lại lớp glow overlay -->
+  <div class="case-badge">NEBULA SERIES</div>
+</div>
+    </div>
+    <div class="float-chip c1">
+      
+      <div class="chip-label">BẢO VỆ</div>
+      <div class="chip-val">Military Grade</div>
+    </div>
+    <div class="float-chip c2">
+      
+      <div class="chip-label">TRỌNG LƯỢNG</div>
+      <div class="chip-val">22g Ultra-Thin</div>
+    </div>
+    <div class="float-chip c3">
+      
+      <div class="chip-label">MÀU SẮC</div>
+      <div class="chip-val">4 Phiên Bản</div>
+    </div>
+  </div>
+  <div class="product-info reveal-right">
+    <div class="prod-eyebrow">
+      <span class="prod-tag">NEW ARRIVAL 2025</span>
+    </div>
+    <h2 class="prod-title">LumiCase<br><span class="glow-text">Nebula Pro</span></h2>
+    <p class="prod-desc">Được tạo ra từ vật liệu PC cao cấp kết hợp với lớp hoàn thiện nano vũ trụ đặc biệt. Mỗi chiếc ốp là một tác phẩm nghệ thuật phản chiếu ánh sáng như bầu trời đêm đầy sao.</p>
+    <p class="color-name">Chọn phiên bản màu:</p>
+    <div class="color-picker">
+      <div class="color-dot c-nebula active" onclick="selectColor(this,'Nebula Teal')" title="Nebula Teal"></div>
+      <div class="color-dot c-cosmos" onclick="selectColor(this,'Cosmos Pink')" title="Cosmos Pink"></div>
+      <div class="color-dot c-void" onclick="selectColor(this,'Void Black')" title="Void Black"></div>
+      <div class="color-dot c-aurora" onclick="selectColor(this,'Aurora Green')" title="Aurora Green"></div>
+    </div>
+    <div class="prod-price-row">
+      <span class="prod-price">349.000₫</span>
+      <span class="prod-price-old">499.000₫</span>
+      <span class="prod-price-off">Pre-order −30%</span>
+    </div>
+    <div class="prod-actions">
+      <button class="btn-space" onclick="document.getElementById('preorder').scrollIntoView({behavior:'smooth'})">Đặt Trước Ngay</button>
+      <button class="btn-ghost">Xem Chi Tiết</button>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section" id="features">
+  <div class="section-header reveal">
+    <span class="section-tag">Tính Năng Nổi Bật</span>
+    <h2 class="section-title">Được Thiết Kế Cho<br>Những Người Dám Khác Biệt</h2>
+    <p class="section-sub">Mỗi chi tiết đều được tính toán kỹ lưỡng để mang lại trải nghiệm sở hữu hoàn hảo nhất.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feat-card reveal">
+      <div class="feat-card-glow"></div>
+      <div class="feat-icon-wrap">01</div>
+      <div class="feat-num">01 — BẢO VỆ</div>
+      <h3 class="feat-title">Chống Sốc Quân Sự</h3>
+      <p class="feat-desc">Đạt chuẩn MIL-STD-810H, chịu được va đập từ độ cao 2m. Lớp TPU bên trong hấp thụ lực tác động, giữ điện thoại của bạn an toàn tuyệt đối.</p>
+    </div>
+    <div class="feat-card reveal" style="transition-delay:.1s">
+      <div class="feat-card-glow"></div>
+      <div class="feat-icon-wrap">02</div>
+      <div class="feat-num">02 — THẨM MỸ</div>
+      <h3 class="feat-title">Hoàn Thiện Nano Vũ Trụ</h3>
+      <p class="feat-desc">Công nghệ in ảnh nano độ phân giải cao, màu sắc không phai dù để ngoài nắng. Hiệu ứng ánh sáng holographic thay đổi theo góc nhìn như vũ trụ thực sự.</p>
+    </div>
+    <div class="feat-card reveal" style="transition-delay:.2s">
+      <div class="feat-card-glow"></div>
+      <div class="feat-icon-wrap">03</div>
+      <div class="feat-num">03 — TIỆN DỤNG</div>
+      <h3 class="feat-title">Siêu Mỏng, Siêu Nhẹ</h3>
+      <p class="feat-desc">Chỉ 1.2mm độ dày và 22g trọng lượng. Không cản trở sạc không dây MagSafe. Thiết kế ergonomic vừa tay, nâng cấp cảm giác cầm nắm điện thoại.</p>
+    </div>
+    <div class="feat-card reveal" style="transition-delay:.3s">
+      <div class="feat-card-glow"></div>
+      <div class="feat-icon-wrap">04</div>
+      <div class="feat-num">04 — VẬT LIỆU</div>
+      <h3 class="feat-title">PC Cao Cấp Kháng Nhiệt</h3>
+      <p class="feat-desc">Chất liệu Polycarbonate aerospace-grade chịu nhiệt độ từ −40°C đến +85°C. Không ố vàng, không giòn theo thời gian dù sử dụng hằng ngày.</p>
+    </div>
+    <div class="feat-card reveal" style="transition-delay:.4s">
+      <div class="feat-card-glow"></div>
+      <div class="feat-icon-wrap">05</div>
+      <div class="feat-num">05 — TƯƠNG THÍCH</div>
+      <h3 class="feat-title">Fit Perfect Mọi Model</h3>
+      <p class="feat-desc">Thiết kế khuôn đúc CNC chính xác đến 0.1mm. Nút bấm, cổng sạc, loa và camera đều được cắt khoét hoàn hảo, không che mất bất kỳ chức năng nào.</p>
+    </div>
+    <div class="feat-card reveal" style="transition-delay:.5s">
+      <div class="feat-card-glow"></div>
+      <div class="feat-icon-wrap">06</div>
+      <div class="feat-num">06 — BỀN VỮNG</div>
+      <h3 class="feat-title">Thân Thiện Môi Trường</h3>
+      <p class="feat-desc">Sản xuất từ 30% vật liệu tái chế. Hộp đóng gói 100% giấy tái chế. Mỗi đơn hàng đóng góp trồng 1 cây xanh qua chương trình hợp tác với GreenVN.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MATERIALS -->
+<section class="materials-section" id="materials">
+  <div class="materials-inner">
+    <div class="reveal-left">
+      <div class="section-header" style="text-align:left;margin-bottom:40px;">
+        <span class="section-tag">Thông Số Kỹ Thuật</span>
+        <h2 class="section-title">Chất Lượng<br>Nói Lên Tất Cả</h2>
+      </div>
+      <div class="material-specs">
+        <div class="spec-row">
+          <div class="spec-left"><div class="spec-dot"></div><span class="spec-name">Chất liệu chính</span></div>
+          <span class="spec-val">Polycarbonate Aerospace</span>
+        </div>
+        <div class="spec-divider"></div>
+        <div class="spec-row">
+          <div class="spec-left"><div class="spec-dot"></div><span class="spec-name">Lớp bảo vệ trong</span></div>
+          <span class="spec-val">TPU Shock-Absorb</span>
+        </div>
+        <div class="spec-divider"></div>
+        <div class="spec-row">
+          <div class="spec-left"><div class="spec-dot"></div><span class="spec-name">Độ dày</span></div>
+          <span class="spec-val">1.2mm</span>
+        </div>
+        <div class="spec-divider"></div>
+        <div class="spec-row">
+          <div class="spec-left"><div class="spec-dot"></div><span class="spec-name">Trọng lượng</span></div>
+          <span class="spec-val">22g</span>
+        </div>
+        <div class="spec-divider"></div>
+        <div class="spec-row">
+          <div class="spec-left"><div class="spec-dot"></div><span class="spec-name">Công nghệ in</span></div>
+          <span class="spec-val">Nano UV Resolution</span>
+        </div>
+        <div class="spec-divider"></div>
+        <div class="spec-row">
+          <div class="spec-left"><div class="spec-dot"></div><span class="spec-name">Chuẩn bảo vệ</span></div>
+          <span class="spec-val">MIL-STD-810H</span>
+        </div>
+        <div class="spec-divider"></div>
+        <div class="spec-row">
+          <div class="spec-left"><div class="spec-dot"></div><span class="spec-name">Bảo hành</span></div>
+          <span class="spec-val">18 Tháng</span>
+        </div>
+      </div>
+    </div>
+    <div class="material-visual reveal-right">
+      <div class="big-stat">18M</div>
+      <div class="big-stat-label">THÁNG BẢO HÀNH TOÀN DIỆN</div>
+      <div class="stats-mini">
+        <div class="mini-stat"><div class="mini-num">2m</div><div class="mini-label">Độ cao chịu đựng</div></div>
+        <div class="mini-stat"><div class="mini-num">4K</div><div class="mini-label">Độ phân giải in</div></div>
+        <div class="mini-stat"><div class="mini-num">12+</div><div class="mini-label">Model iPhone/Android</div></div>
+        <div class="mini-stat"><div class="mini-num">4</div><div class="mini-label">Phiên bản màu</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="social-section">
+  <div class="section-header reveal">
+    <span class="section-tag">Đánh Giá</span>
+    <h2 class="section-title">Khách Hàng Nói Gì</h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testi-card reveal">
+      <div class="testi-stars">5 / 5</div>
+      <p class="testi-text">"Đẹp hơn tôi tưởng rất nhiều! Hiệu ứng holographic cực kỳ ấn tượng, nhìn khác hoàn toàn tùy góc ánh sáng. Bạn bè hỏi mua liên tục "</p>
+      <div class="testi-user">
+        <div class="testi-avatar">LN</div>
+        <div><div class="testi-name">Linh Nguyễn</div><div class="testi-handle">@linhh.n · TP.HCM</div></div>
+      </div>
+    </div>
+    <div class="testi-card reveal" style="transition-delay:.1s">
+      <div class="testi-stars">5 / 5</div>
+      <p class="testi-text">"Mỏng nhẹ mà vẫn siêu chắc chắn. Đánh rơi mấy lần rồi mà phone vẫn ok. Chất liệu cầm rất sang tay, không bị nhờn hay trơn."</p>
+      <div class="testi-user">
+        <div class="testi-avatar">KH</div>
+        <div><div class="testi-name">Khoa Hùng</div><div class="testi-handle">@khoahung.dev · Hà Nội</div></div>
+      </div>
+    </div>
+    <div class="testi-card reveal" style="transition-delay:.2s">
+      <div class="testi-stars">5 / 5</div>
+      <p class="testi-text">"Giao hàng siêu nhanh, đóng gói rất xịn. Ốp vừa khít hoàn toàn, không bị lệch hay cộm. Đây là ốp đẹp nhất mình từng dùng!"</p>
+      <div class="testi-user">
+        <div class="testi-avatar">TM</div>
+        <div><div class="testi-name">Thảo Minh</div><div class="testi-handle">@thaodesign · Đà Nẵng</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / PRE-ORDER -->
+<section class="cta-section" id="preorder">
+  <div class="cta-nebula"></div>
+  <div class="cta-inner reveal">
+    <span class="section-tag">Pre-order Mở Đến 27/5/2025</span>
+    <h2 class="cta-title">Đặt Trước Hôm Nay<br><span class="glow">Nhận Ưu Đãi 30%</span></h2>
+    <p class="cta-sub">Chỉ 500 chiếc đầu tiên được giảm giá đặc biệt. Đăng ký email để nhận thông báo và mã ưu đãi độc quyền khi sản phẩm chính thức ra mắt.</p>
+    <div class="cta-form">
+      <input class="cta-input" type="email" placeholder="email@example.com" id="emailInput">
+      <button class="btn-space" onclick="submitEmail()">Đăng Ký</button>
+    </div>
+    <p class="cta-note" id="emailMsg">Không spam. Hủy đăng ký bất kỳ lúc nào.</p>
+    <div class="cta-badges">
+      <span class="cta-badge"> Thanh toán bảo mật</span>
+      <span class="cta-badge"> Free ship toàn quốc</span>
+      <span class="cta-badge"> Đổi trả 30 ngày</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">LUMICASE</div>
+  <div class="footer-links">
+    <a href="#">Giới Thiệu</a>
+    <a href="#">Chính Sách</a>
+    <a href="#">Liên Hệ</a>
+    <a href="#">Instagram</a>
+    <a href="#">TikTok</a>
+  </div>
+  <div class="footer-copy">© 2025 LumiCase. All rights reserved.</div>
+</footer>
+
+<script>
+// CURSOR
+var cur = document.getElementById('cursor');
+var ring = document.getElementById('cursor-ring');
+document.addEventListener('mousemove', function(e) {
+  cur.style.left = e.clientX + 'px';
+  cur.style.top = e.clientY + 'px';
+  setTimeout(function() {
+    ring.style.left = e.clientX + 'px';
+    ring.style.top = e.clientY + 'px';
+  }, 80);
+});
+document.querySelectorAll('button,a,.feat-card,.testi-card,.color-dot').forEach(function(el) {
+  el.addEventListener('mouseenter', function() {
+    cur.style.width = '18px'; cur.style.height = '18px';
+    ring.style.width = '52px'; ring.style.height = '52px';
+  });
+  el.addEventListener('mouseleave', function() {
+    cur.style.width = '10px'; cur.style.height = '10px';
+    ring.style.width = '36px'; ring.style.height = '36px';
+  });
+});
+
+// STARFIELD
+var canvas = document.getElementById('starfield');
+var ctx = canvas.getContext('2d');
+var stars = [];
+var mouseX = 0, mouseY = 0;
+function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+window.addEventListener('resize', resize); resize();
+document.addEventListener('mousemove', function(e) { mouseX = e.clientX; mouseY = e.clientY; });
+
+// Create stars
+for (var i = 0; i < 280; i++) {
+  stars.push({
+    x: Math.random(), y: Math.random(),
+    size: Math.random() * 1.8 + 0.3,
+    opacity: Math.random() * 0.7 + 0.1,
+    speed: Math.random() * 0.0003 + 0.0001,
+    phase: Math.random() * Math.PI * 2,
+    color: Math.random() > 0.85 ? '#00e5c8' : Math.random() > 0.9 ? '#a78bfa' : '#ffffff'
+  });
+}
+// shooting stars
+var shooters = [];
+function spawnShooter() {
+  shooters.push({ x: Math.random() * .7, y: Math.random() * .4, len: 80 + Math.random() * 100, speed: .008 + Math.random() * .012, opacity: 1, angle: Math.PI / 5 + (Math.random() - .5) * .3 });
+  setTimeout(spawnShooter, 3000 + Math.random() * 5000);
+}
+setTimeout(spawnShooter, 2000);
+
+function drawStars() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  var t = Date.now() / 1000;
+  var parallaxX = (mouseX / canvas.width - .5) * 15;
+  var parallaxY = (mouseY / canvas.height - .5) * 15;
+  stars.forEach(function(s) {
+    var px = (s.x * canvas.width + parallaxX * s.size) % canvas.width;
+    var py = (s.y * canvas.height + parallaxY * s.size) % canvas.height;
+    var twinkle = Math.sin(t * 2 + s.phase) * 0.3 + 0.7;
+    ctx.beginPath();
+    ctx.arc(px, py, s.size, 0, Math.PI * 2);
+    ctx.fillStyle = s.color;
+    ctx.globalAlpha = s.opacity * twinkle;
+    ctx.fill();
+  });
+  shooters.forEach(function(s, i) {
+    var sx = s.x * canvas.width;
+    var sy = s.y * canvas.height;
+    var ex = sx + Math.cos(s.angle) * s.len * (1 - s.opacity);
+    var ey = sy + Math.sin(s.angle) * s.len * (1 - s.opacity);
+    var grad = ctx.createLinearGradient(sx, sy, ex, ey);
+    grad.addColorStop(0, 'rgba(255,255,255,0)');
+    grad.addColorStop(1, 'rgba(0,229,200,' + s.opacity * .8 + ')');
+    ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(ex, ey);
+    ctx.strokeStyle = grad; ctx.lineWidth = 1.5; ctx.globalAlpha = 1; ctx.stroke();
+    s.x += Math.cos(s.angle) * s.speed;
+    s.y += Math.sin(s.angle) * s.speed;
+    s.opacity -= 0.012;
+    if (s.opacity <= 0) shooters.splice(i, 1);
+  });
+  ctx.globalAlpha = 1;
+  requestAnimationFrame(drawStars);
+}
+drawStars();
+
+// NAV SCROLL
+window.addEventListener('scroll', function() {
+  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// SCROLL REVEAL
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(function(el) { observer.observe(el); });
+
+// RIBBON
+var ribbonItems = ['NEBULA SERIES', 'MILITARY GRADE', 'MIEN PHI VAN CHUYEN', 'DOI TRA 30 NGAY', 'BAO HANH 18 THANG', 'PRE-ORDER -30%', 'ULTRA THIN 1.2MM', 'HOLOGRAPHIC NANO'];
+var track = document.getElementById('ribbonTrack');
+var html = '';
+for (var x = 0; x < 3; x++) {
+  ribbonItems.forEach(function(item) { html += '<span class="ribbon-item">' + item + '</span>'; });
+}
+track.innerHTML = html;
+
+// COUNTDOWN
+var launchDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000 + 14 * 60 * 60 * 1000 + 32 * 60 * 1000);
+function updateCountdown() {
+  var diff = launchDate - Date.now();
+  if (diff <= 0) { document.getElementById('cd-days').textContent='00'; return; }
+  var d = Math.floor(diff / 86400000);
+  var h = Math.floor((diff % 86400000) / 3600000);
+  var m = Math.floor((diff % 3600000) / 60000);
+  var s = Math.floor((diff % 60000) / 1000);
+  document.getElementById('cd-days').textContent = String(d).padStart(2,'0');
+  document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+  document.getElementById('cd-mins').textContent = String(m).padStart(2,'0');
+  document.getElementById('cd-secs').textContent = String(s).padStart(2,'0');
+}
+setInterval(updateCountdown, 1000); updateCountdown();
+
+// COLOR PICKER
+function selectColor(el, name) {
+  document.querySelectorAll('.color-dot').forEach(function(d) { d.classList.remove('active'); });
+  el.classList.add('active');
+  document.querySelector('.color-name').textContent = 'Đang chọn: ' + name;
+}
+
+// EMAIL SUBMIT
+function submitEmail() {
+  var val = document.getElementById('emailInput').value;
+  var msg = document.getElementById('emailMsg');
+  if (!val || !val.includes('@')) {
+    msg.textContent = 'Vui lòng nhập email hợp lệ.';
+    msg.style.color = '#ff5fad';
+    return;
+  }
+  msg.textContent = 'Đã đăng ký thành công! Kiểm tra email để nhận mã giảm giá 30%.';
+  msg.style.color = '#00e5c8';
+  document.getElementById('emailInput').value = '';
+}
+
+// NAV scroll helper
+function scrollTo(id) { document.getElementById(id).scrollIntoView({behavior:'smooth'}); }
+</script>
+</body>
+</html>
